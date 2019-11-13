@@ -112,9 +112,7 @@ module Xray
 
     # Appends the given `script_name` after the `after_script_name`.
     def append_js!(html, after_script_name, script_name)
-      html.sub!(script_matcher(after_script_name)) do
-        "#{$~}\n" + helper.javascript_include_tag(script_name)
-      end
+      html.sub!(/<\/body[^>]*>/) { "#{$~}\n#{helper.javascript_include_tag(script_name)}" }
     end
 
     def helper
